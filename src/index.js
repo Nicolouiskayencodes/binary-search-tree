@@ -16,5 +16,12 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
 
 let tree = Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324])
 prettyPrint(tree.getRoot())
-tree.remove(67);
-prettyPrint(tree.getRoot())
+// tree.insert(10)
+// prettyPrint(tree.getRoot())
+// tree.remove(23);
+// prettyPrint(tree.getRoot())
+let find = tree.find(8)
+console.log(find)
+tree.postOrder(function (value) {
+  console.log(value)
+})

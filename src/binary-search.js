@@ -4,13 +4,17 @@ export default function Tree(array) {
   let sorted = mergeSort(array);
   function buildTree(array){
     if (array.length === 0) return null;
-    let mid = Math.floor(array.length/2);
+    let mid = Math.floor((array.length-1)/2);
+    console.log(mid);
     let root = Node(array[mid]);
     root.setLeft(buildTree(array.slice(0,mid)));
     root.setRight(buildTree(array.slice((mid+1))))
     return root.node();
   }
   let root = buildTree(sorted);
+  function getRoot(){
+    return root;
+  }
   function insert(value) {
     if (value === null){
       return;
@@ -103,9 +107,76 @@ export default function Tree(array) {
   }
   findNode(root);
   }
-  function getRoot(){
-    return root;
+  function find(value) {
+    function findNode(branch){
+      if (branch.data === null){
+        return (value + " is not in tree");
+      } else if (branch.data === value) {
+        return branch;
+      } else if (branch.data > value) {
+        return findNode(branch.left)
+      } else if (branch.data < value) {
+        return findNode(branch.right)
+      }
+    }
+    
+    let found = findNode(root);
+    return found;
   }
-  return {getRoot, insert, remove}
+  function levelOrder(callback) {
+    let queue = [];
+    if (!callback) {
+      throw "levelOrder must be passed function";
+    }
+    if (root === null) return;
+    queue.push(root);
+    while (queue.length !==0) {
+      let current = queue.shift();
+      callback(current.data);
+      if (current.left !== null) {
+        queue.push(current.left);
+      }
+      if (current.right !== null) {
+        queue.push(current.right);
+      }
+    }
+  }
+  function inOrder(callback){
+    if (!callback) {
+      throw "levelOrder must be passed function";
+    }
+    function inOrd(node){
+      if (node === null) return;
+      inOrd(node.left);
+      callback(node.data);
+      inOrd(node.right);
+    }
+    inOrd(root);
+  }
+  function preOrder(callback){
+    if (!callback) {
+      throw "levelOrder must be passed function";
+    }
+    function preOrd(node){
+      if (node === null) return;
+      callback(node.data);
+      preOrd(node.left);
+      preOrd(node.right);
+    }
+    preOrd(root);
+  }
+  function postOrder(callback){
+    if (!callback) {
+      throw "levelOrder must be passed function";
+    }
+    function postOrd(node){
+      if (node === null) return;
+      postOrd(node.left);
+      postOrd(node.right);
+      callback(node.data);
+    }
+    postOrd(root);
+  }
+  return {getRoot, insert, remove, find, levelOrder, inOrder, preOrder, postOrder}
 }
 
