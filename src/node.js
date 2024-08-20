@@ -1,7 +1,16 @@
 export default function Node(val) {
   let obj = {};
-  obj["value"] = val;
+  obj["data"] = val;
   obj.left = null;
   obj.right = null;
-  return obj;
+  function setLeft(value) {
+    obj.left = value;
+  }
+  function setRight(value){
+    obj.right = value;
+  }
+  function node(){
+    return obj;
+  }
+  return {node, setLeft, setRight}
 }
