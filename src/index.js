@@ -14,17 +14,41 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
   }
 };
 
-let tree = Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
+function randomArray() {
+  let array = [];
+  for(let i=0; i<20;i++){
+    let x = Math.floor(Math.random()*100);
+    array.push(x);
+  }
+  return array;
+}
+function display(callback){
+  let array = [];
+  callback(function(node){
+    array.push(node.data);
+  });
+  console.log(array);
+}
+
+
+let tree = Tree(randomArray());
 prettyPrint(tree.getRoot());
-let find = tree.find(324);
-console.log(tree.height(find));
-console.log(tree.depth(find));
 console.log(tree.isBalanced());
-tree.insert(10);
+display(tree.levelOrder);
+display(tree.preOrder);
+display(tree.postOrder);
+display(tree.inOrder);
+tree.insert(107);
+tree.insert(146);
+tree.insert(114);
+tree.insert(102);
+tree.insert(120);
 prettyPrint(tree.getRoot());
-console.log(tree.isBalanced());
-// tree.remove(23);
-// prettyPrint(tree.getRoot());
 console.log(tree.isBalanced());
 tree.rebalance();
+console.log(tree.isBalanced());
+display(tree.levelOrder);
+display(tree.preOrder);
+display(tree.postOrder);
+display(tree.inOrder);
 prettyPrint(tree.getRoot());
